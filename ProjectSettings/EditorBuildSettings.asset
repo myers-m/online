@@ -6,12 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/table.unity
-    guid: cf4e7d50cb1bc6c4e9d7b3befbb201ad
-  - enabled: 1
     path: Assets/begin.unity
     guid: f7a1c2ed740e46540b6b1f93d896e9a5
   - enabled: 1
     path: Assets/wait.unity
     guid: 6c536f2b4dcf49c48981710cfad61e05
+  - enabled: 1
+    path: Assets/table.unity
+    guid: cf4e7d50cb1bc6c4e9d7b3befbb201ad
+  - enabled: 1
+    path: Assets/newbegin.unity
+    guid: ab6f5c72482269049990eb2e6e7c87d7
   m_configObjects: {}

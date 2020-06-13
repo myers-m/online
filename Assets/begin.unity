@@ -346,6 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a0048f4bbad55b42bef6e26d67c0d8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waitbl: 0
 --- !u!4 &291383245
 Transform:
   m_ObjectHideFlags: 0
@@ -540,7 +541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -971,6 +972,7 @@ GameObject:
   - component: {fileID: 941843539}
   - component: {fileID: 941843538}
   - component: {fileID: 941843537}
+  - component: {fileID: 941843540}
   m_Layer: 5
   m_Name: quit
   m_TagString: Untagged
@@ -1077,6 +1079,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 941843535}
   m_CullTransparentMesh: 0
+--- !u!114 &941843540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941843535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23e4b993273ac7649820a4f103046df8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1208,12 +1222,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.07
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1661,19 +1675,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  bt1: {fileID: 0}
-  bt2: {fileID: 0}
   text: {fileID: 0}
   connectui: {fileID: 618543581}
+  other: []
+  table: {fileID: 0}
+  control: {fileID: 0}
   pause: 1
-  tcp: 1
   connect: 1
+  createtable: -1
+  wait: 0
   intable: 0
-  change: 0
-  life: 10
-  score: 0
-  maxscore: -1
-  list: 
+  outtable: 0
+  begin: 1
+  tid: 0
 --- !u!4 &2022062992
 Transform:
   m_ObjectHideFlags: 0

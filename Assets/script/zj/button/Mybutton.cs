@@ -16,13 +16,16 @@ public class Mybutton : MonoBehaviour
 
     private void onclick() {
         if (this.name == "create") {
-
+            Gamemanager.instance.createtable();
         }
         else if (this.name == "join") {
-
+            Gamemanager.instance.jointable();
         }
         else if (this.name == "quit") {
             Gamemanager.instance.exit();
+        }
+        else if (this.name == "out") {
+            Gamemanager.instance.outtable();
         }
     }
 }

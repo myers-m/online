@@ -10,6 +10,7 @@ public class wait : MonoBehaviour
 
     private void Start()
     {
+        //print("this");
         Gamemanager.instance.waitload();
     }
 

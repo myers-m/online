@@ -2,17 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class other : MonoBehaviour
+public class other : people
 {
-    // Start is called before the first frame update
-    void Start()
+    public Vector3 oldposition = new Vector3(0,0,0);
+    public Vector3 position = new Vector3(0,0,0);
+    public Quaternion rotation = new Quaternion();
+
+    public int id = 0;
+
+    private void Start()
     {
-        
+        this.init();
+        shuju.instance.other.Add(this);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        this.transform.position = oldposition;
+        this.transform.rotation = this.rotation;
+        this.move();
+    }
+
+    public void setvalue(Vector3 oldposition,Vector3 position,Quaternion rotation) {
+        this.oldposition = oldposition;
+        this.position = position;
+        this.rotation = rotation;
+        this.vmove = position - oldposition;
+    }
+
+    void move() {
+        this.transform.position += vmove;
     }
 }

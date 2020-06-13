@@ -7,29 +7,47 @@ public class shuju : MonoBehaviour
 {
     public static shuju instance;
 
-    public GameObject player;
+    public player player;
     public GameObject text;
     public GameObject connectui;
 
+    public List<other> other;
+    public tablemanager table;
     public control control;
 
     public bool pause = true;
 
-    public bool tcp = true;
     public bool connect = true;
+    public int createtable = -1;
+
+    public bool wait = false;
 
     public bool intable = false;
+    public bool outtable = false;
 
-    public bool change = false;
-    public int life = 10;
-    public int score = 0;
+    public bool begin = true;
 
-    public int maxscore = -1;
-
-    public List<int> list=new List<int>();
+    public int tid = 0;
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null) {
+            instance = this;
+        }
+    }
+
+    public int findid(int id) {
+        int res = -1;
+        print(this.other.Count);
+        for (int i=0;i<this.other.Count;i++)
+        {
+            print(this.other.Count);
+            if (this.other[i].id==id) {
+                res = i;
+                break;
+            }
+        }
+        print(res);
+        return res;
     }
 }

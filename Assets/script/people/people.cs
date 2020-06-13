@@ -6,16 +6,9 @@ public class people : MonoBehaviour,ipeople
 {
     protected Vector3 vmove = new Vector3(0,0,0);
 
-    protected CharacterController m_ch;
-    
-
     protected float speed = 4;
 
-    // Start is called before the first frame update
-    protected void Start()
-    {
-        this.m_ch = this.gameObject.AddComponent<CharacterController>();
-    }
+    public Color color = new Color();
 
     // Update is called once per frame
     void Update()
@@ -30,8 +23,9 @@ public class people : MonoBehaviour,ipeople
         
     }
 
-    public void move()
-    {
-        this.m_ch.Move(this.vmove);
+    
+
+    public void init() {
+        this.GetComponent<MeshRenderer>().material.color = this.color;
     }
 }
