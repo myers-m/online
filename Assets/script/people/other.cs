@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public class other : people
 
     public int id = 0;
 
+    public bool destory = false;
+
     private void Start()
     {
         this.init();
@@ -19,6 +22,9 @@ public class other : people
     // Update is called once per frame
     void Update()
     {
+        if (this.destory) {
+            GameObject.Destroy(this.gameObject);
+        }
         this.transform.position = oldposition;
         this.transform.rotation = this.rotation;
         this.move();

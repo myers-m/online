@@ -211,10 +211,10 @@ public class Tcp : MonoBehaviour
                 this.need = this.need0[0].Split('_');
                 for (int i = 0; i < need.Length; i++) {
                     string[] need1 = need[i].Split('|');
-                    int id = int.Parse(need1[i * 11]);
-                    Vector3 oldposition = new Vector3(float.Parse(need1[i * 11 + 1]), float.Parse(need1[i * 11 + 2]), float.Parse(need1[i * 11 + 3]));
-                    Vector3 position = new Vector3(float.Parse(need1[i * 11 + 4]), float.Parse(need1[i * 11 + 5]), float.Parse(need1[i * 11 + 6]));
-                    Quaternion rotation = new Quaternion(float.Parse(need1[i * 11 + 7]), float.Parse(need1[i * 11 + 8]), float.Parse(need1[i * 11 + 9]), float.Parse(need1[i * 11 + 10]));
+                    int id = int.Parse(need1[0]);
+                    Vector3 oldposition = new Vector3(float.Parse(need1[1]), float.Parse(need1[2]), float.Parse(need1[3]));
+                    Vector3 position = new Vector3(float.Parse(need1[4]), float.Parse(need1[5]), float.Parse(need1[6]));
+                    Quaternion rotation = new Quaternion(float.Parse(need1[7]), float.Parse(need1[8]), float.Parse(need1[9]), float.Parse(need1[10]));
                     //print(shuju.instance.other.Count);
                     //print(shuju.instance.findid(id));
                     int needid = -1;

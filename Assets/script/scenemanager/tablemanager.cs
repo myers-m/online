@@ -26,6 +26,7 @@ public class tablemanager : MonoBehaviour
         {
             while (this.id.Count > 0)
             {
+                print("create");
                 this.createother(id[0], color[0]);
                 this.id.RemoveAt(0);
                 this.color.RemoveAt(0);
@@ -45,7 +46,7 @@ public class tablemanager : MonoBehaviour
                 {
                     print("killbg");
                     print(shuju.instance.other.Count);
-                    GameObject.Destroy(shuju.instance.other[oid]);
+                    shuju.instance.other[oid].destory=true;
                     shuju.instance.other.RemoveAt(oid);
                     print(shuju.instance.other.Count);
                     print("kill");

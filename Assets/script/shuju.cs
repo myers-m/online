@@ -38,16 +38,16 @@ public class shuju : MonoBehaviour
 
     public int findid(int id) {
         int res = -1;
-        print(this.other.Count);
+        //print(this.other.Count);
         for (int i=0;i<this.other.Count;i++)
         {
-            print(this.other.Count);
+            //print(this.other.Count);
             if (this.other[i].id==id) {
                 res = i;
                 break;
             }
         }
-        print(res);
+        //print(res);
         return res;
     }
 }
