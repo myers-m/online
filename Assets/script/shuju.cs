@@ -11,14 +11,15 @@ public class shuju : MonoBehaviour
     public GameObject text;
     public GameObject connectui;
 
+    public bool _loginbl = false;
+
     public List<other> other;
-    public tablemanager table;
+    public Imanager manager;
     public control control;
 
     public bool pause = true;
 
     public bool connect = true;
-    public int createtable = -1;
 
     public bool wait = false;
 
@@ -27,7 +28,15 @@ public class shuju : MonoBehaviour
 
     public bool begin = true;
 
+    public bool createtable = false;
+    public bool jointable = false;
+    public bool login = false;
+    public bool regis = false;
+    public bool await = false;
+    public bool doasync = false;
+
     public int tid = 0;
+    public float FPS = 60;
 
     private void Awake()
     {

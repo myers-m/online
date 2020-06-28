@@ -65,6 +65,7 @@ public class Tcp : MonoBehaviour
 
     void InitSocket() {
         this.ip = IPAddress.Parse("49.232.170.103");
+        //this.ip = IPAddress.Parse("127.0.0.1");
         this.ipEnd = new IPEndPoint(ip, 8080);
         this.connectThread = new Thread(new ThreadStart(SocketReceive));
         this.connectThread.Start();
@@ -109,6 +110,7 @@ public class Tcp : MonoBehaviour
         this.recvStr = Encoding.ASCII.GetString(this.recvData, 0, this.recvLen);
         if (recvStr == "connect success")
         {
+            shuju.instance.manager.Manager("setconnect", null);
             return true;
         }
         else {
@@ -136,80 +138,115 @@ public class Tcp : MonoBehaviour
         this.recvData = new byte[1024];
         this.recvLen = serverSocket.Receive(recvData);
         this.recvStr = Encoding.ASCII.GetString(this.recvData, 0, this.recvLen);
-        print(this.recvStr);
+        //print(this.recvStr);
     }
 
     string[] need0;
     string[] need;
     void doing(){
-        if (shuju.instance.createtable == 1) {
-            if (this.recvStr.Contains("create table success")) {
-                shuju.instance.tid = int.Parse(this.recvStr.Replace("create table success", ""));
-                shuju.instance.createtable = 0;
+        if (shuju.instance.await) {
+            if (!shuju.instance.intable) {
+                if (shuju.instance.login) {
+                    if (this.recvStr.Equals("login success"))
+                    {
+                        shuju.instance._loginbl = true;
+                    }
+                    shuju.instance.login = false;
+                }
+                else if (shuju.instance.regis) {
+                    if (this.recvStr.Equals("regis success"))
+                    {
+                        print("this");
+                        shuju.instance._loginbl = true;
+                    }
+                    shuju.instance.regis = false;
+                }
+                else if (shuju.instance.createtable) {
+                    if (this.recvStr.Contains("create table success")) {
+                        shuju.instance.tid = int.Parse(this.recvStr.Replace("create table success", ""));
+                        shuju.instance.doasync = true;
+                        print("create table success");
+                    }
+                    else{
+                        print("create table lose");
+                        shuju.instance.createtable = false;
+                    }
+                }
+                else if (shuju.instance.jointable) {
+                    if (this.recvStr.Contains("join success")) {
+                        shuju.instance.tid = int.Parse(this.recvStr.Replace("join success", ""));
+                        shuju.instance.doasync = true;
+                    }
+                    else{
+                        print("join lose");
+                        shuju.instance.jointable = false;
+                    }
+                }
             }
-            else if (this.recvStr.Equals("create table lose")) {
-                shuju.instance.createtable = -1;
-                print("create table lose");
-            }
-            else if (this.recvStr.Contains("join success")) {
-                shuju.instance.tid = int.Parse(this.recvStr.Replace("join success", ""));
-                shuju.instance.createtable = 0;
-            }
-            else if (this.recvStr.Contains("join lose")) {
-                shuju.instance.createtable = -1;
-                print("join lose");
-            }
+            shuju.instance.await = false;
         }
 
-        if (shuju.instance.outtable && !shuju.instance.wait && shuju.instance.intable) {
+        if (shuju.instance.outtable && !shuju.instance.wait && shuju.instance.intable)
+        {
             this.set("out table");
             shuju.instance.wait = true;
         }
-        else if (shuju.instance.outtable && shuju.instance.wait) {
+        else if (shuju.instance.outtable && shuju.instance.wait)
+        {
             if (this.recvStr.Equals("out table success"))
             {
                 shuju.instance.intable = false;
                 shuju.instance.wait = false;
             }
-            else {
+            else
+            {
                 shuju.instance.outtable = false;
                 shuju.instance.wait = false;
             }
             //print(this.recvStr);
             this.set("connect");
         }
-        else if (shuju.instance.intable && shuju.instance.wait) {
+        else if (shuju.instance.intable && shuju.instance.wait)
+        {
             shuju.instance.wait = false;
             this.set("intable" + "," + shuju.instance.player.color.r + "|" + shuju.instance.player.color.g + "|" + shuju.instance.player.color.b + "|" + shuju.instance.player.color.a);
         }
-        else if (shuju.instance.intable && !shuju.instance.wait) {
+        else if (shuju.instance.intable && !shuju.instance.wait)
+        {
             this.need0 = this.recvStr.Split('%');
-            if (!this.need0[1].Equals("")) {
-                for (int i = 1; i < need0.Length; i++) {
-                    if (need0[i].Contains("out")) {
+            if (!this.need0[1].Equals(""))
+            {
+                for (int i = 1; i < need0.Length; i++)
+                {
+                    if (need0[i].Contains("out"))
+                    {
                         string res = this.need0[i].Replace("out", "");
-                        shuju.instance.table.rid.Add(int.Parse(res));
+                        shuju.instance.manager.Manager("addrid", int.Parse(res));
                         this.waitbl = true;
                     }
-                    else if (need0[i].Contains("in")) {
+                    else if (need0[i].Contains("in"))
+                    {
                         string res = this.need0[i].Replace("in", "");
                         string[] res1 = res.Split(',');
                         int id = int.Parse(res1[0]);
                         string[] res2 = res1[1].Split('|');
                         print(res);
-                        shuju.instance.table.color.Add(new Color(float.Parse(res2[0]), float.Parse(res2[1]), float.Parse(res2[2]), float.Parse(res2[3])));
-                        shuju.instance.table.id.Add(id);
+                        shuju.instance.manager.Manager("addcolor", new Color(float.Parse(res2[0]), float.Parse(res2[1]), float.Parse(res2[2]), float.Parse(res2[3])));
+                        shuju.instance.manager.Manager("addid", id);
                         this.waitbl = true;
                     }
                 }
-                if (this.waitbl) {
+                if (this.waitbl)
+                {
                     this.wait();
                 }
             }
 
-            if (!this.need0[0].Equals("")) {
+            if (!this.need0[0].Equals(""))
+            {
                 this.need = this.need0[0].Split('_');
-                for (int i = 0; i < need.Length; i++) {
+                for (int i = 0; i < need.Length; i++)
+                {
                     string[] need1 = need[i].Split('|');
                     int id = int.Parse(need1[0]);
                     Vector3 oldposition = new Vector3(float.Parse(need1[1]), float.Parse(need1[2]), float.Parse(need1[3]));
@@ -218,7 +255,8 @@ public class Tcp : MonoBehaviour
                     //print(shuju.instance.other.Count);
                     //print(shuju.instance.findid(id));
                     int needid = -1;
-                    if ((needid=shuju.instance.findid(id)) != -1) {
+                    if ((needid = shuju.instance.findid(id)) != -1)
+                    {
                         shuju.instance.other[needid].setvalue(oldposition, position, rotation);
                     }
                 }
@@ -229,15 +267,27 @@ public class Tcp : MonoBehaviour
                 + "|" + shuju.instance.player.rotation.x + "|" + shuju.instance.player.rotation.y + "|" + shuju.instance.player.rotation.z + "|" + shuju.instance.player.rotation.w;
             this.set(value);
         }
-        else {
-            if (shuju.instance.createtable == 2)
+        else
+        {
+            if (shuju.instance.login)
             {
-                this.set("create table");
-                shuju.instance.createtable = 1;
+                shuju.instance.await = true;
+                this.set("login"+ (string)shuju.instance.manager.Get("idnpassword"));
             }
-            else if (shuju.instance.createtable == 3) {
+            else if (shuju.instance.regis)
+            {
+                shuju.instance.await = true;
+                this.set("regis"+(string)shuju.instance.manager.Get("idnpassword"));
+            }
+            else if (shuju.instance.createtable && !shuju.instance.await &&!shuju.instance.doasync)
+            {
+                shuju.instance.await = true;
+                this.set("create table");
+            }
+            else if (shuju.instance.jointable && !shuju.instance.await &&!shuju.instance.doasync)
+            {
+                shuju.instance.await = true;
                 this.set("join table");
-                shuju.instance.createtable = 1;
             }
             else
             {
@@ -253,7 +303,7 @@ public class Tcp : MonoBehaviour
     }
 
     void set(string need) {
-        //print(need);
+        print(need);
         this.serverSocket.Send(Encoding.ASCII.GetBytes(need + "-0"));
     }
 }

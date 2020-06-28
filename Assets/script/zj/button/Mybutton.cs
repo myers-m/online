@@ -15,17 +15,31 @@ public class Mybutton : MonoBehaviour
     }
 
     private void onclick() {
-        if (this.name == "create") {
-            Gamemanager.instance.createtable();
-        }
-        else if (this.name == "join") {
-            Gamemanager.instance.jointable();
-        }
-        else if (this.name == "quit") {
-            Gamemanager.instance.exit();
-        }
-        else if (this.name == "out") {
-            Gamemanager.instance.outtable();
+        switch (this.name)
+        {
+            case "create":
+                Gamemanager.instance.createtable();
+                break;
+
+            case "join":
+                Gamemanager.instance.jointable();
+                break;
+
+            case "quit":
+                Gamemanager.instance.exit();
+                break;
+
+            case "out":
+                Gamemanager.instance.outtable();
+                break;
+
+            case "login":
+                shuju.instance.manager.Manager("login",null);
+                break;
+
+            case "regis":
+                shuju.instance.manager.Manager("regis",null);
+                break;
         }
     }
 }

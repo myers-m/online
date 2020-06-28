@@ -21,15 +21,17 @@ public class Gamemanager : MonoBehaviour
 
     private void Start()
     {
-        Time.captureFramerate = 60;
+        Application.targetFrameRate = (int)shuju.instance.FPS;
     }
 
     void Update()
     {
-        if (shuju.instance.createtable == 0)
+        if ((shuju.instance.createtable || shuju.instance.jointable) && shuju.instance.doasync)
         {
             this.loadscene("table");
-            shuju.instance.createtable = -1;
+            shuju.instance.createtable = false;
+            shuju.instance.jointable = false;
+            shuju.instance.doasync = false;
         }
         else if (shuju.instance.outtable && !shuju.instance.intable) {
             shuju.instance.tid = 0;
@@ -56,11 +58,11 @@ public class Gamemanager : MonoBehaviour
     }
 
     public void createtable() {
-        shuju.instance.createtable = 2;
+        shuju.instance.createtable = true;
     }
 
     public void jointable() {
-        shuju.instance.createtable = 3;
+        shuju.instance.jointable = true;
     }
 
     public void outtable() {

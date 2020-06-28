@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class tablemanager : MonoBehaviour
+public class tablemanager : MonoBehaviour,Imanager
 {
     public GameObject other;
     public List<int> id = new List<int>();
@@ -15,7 +15,7 @@ public class tablemanager : MonoBehaviour
     void Start()
     {
         shuju.instance.control = GameObject.FindGameObjectWithTag("control").GetComponent<control>();
-        shuju.instance.table = this;
+        shuju.instance.manager = this;
         new Thread(new ThreadStart(locktcp)).Start();
     }
 
@@ -71,5 +71,30 @@ public class tablemanager : MonoBehaviour
         GameObject gob = GameObject.Instantiate(other);
         gob.GetComponent<other>().id = id;
         gob.GetComponent<other>().color = color;
+    }
+
+    public void Manager(string name,object need)
+    {
+        switch (name) {
+            
+            case "addid":
+                this.id.Add((int)need);
+                break;
+
+            case "addcolor":
+                this.color.Add((Color)need);
+                break;
+
+            case "addrid":
+                this.rid.Add((int)need);
+                break;
+
+        }
+    }
+
+    public object Get(string need) {
+        object res = null;
+        
+        return res;
     }
 }
